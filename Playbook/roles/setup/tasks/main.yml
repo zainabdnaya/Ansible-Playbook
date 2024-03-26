@@ -1,0 +1,20 @@
+- import_tasks: apt.yml
+- import_tasks: group_users.yml
+- import_tasks: curl.yml
+- import_tasks: snapd.yml
+- import_tasks: chrome.yml
+- import_tasks: zsh.yml
+- import_tasks: nodejs.yml
+- import_tasks: permissions.yml
+- import_tasks: timezone.yml
+- import_tasks: ssh.yml
+- import_tasks: editors.yml
+- import_tasks: golang.yml
+- import_tasks: lockscreen.yml
+- import_tasks: background.yml
+- import_tasks: network.yml
+- import_tasks: discord.yml
+- import_tasks: network.yml
+- import_tasks: snapd.yml
+- import_tasks: reboot.yml
+# - import_tasks: shutdown.yml

@@ -1,0 +1,65 @@
+- name: Add Microsoft repository key
+  become: true
+  apt_key:
+    url: https://packages.microsoft.com/keys/microsoft.asc
+    state: present
+
+- name: Install Vscode
+  become: true
+  apt_repository:
+    repo: deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main
+    state: present
+
+- name: Install VSCode apt
+  become: true
+  ansible.builtin.apt:
+      name: code
+      state: present
+
+- name: Update apt
+  become: true
+  ansible.builtin.apt:
+    update_cache: yes      
+
+- name: editor vim
+  become: true
+  ansible.builtin.apt:
+      name: vim
+      state: present
+    
+- name: Copy .vimrc to student home
+  become: true
+  ansible.builtin.copy:
+        src: .vimrc
+        dest: /etc/skel/.vimrc
+        mode: 0755
+
+- name: Isntall wget
+  become: true
+  ansible.builtin.apt:
+      name: wget
+      state: present
+
+- name: Install  Go dependencies
+  become: true
+  become_user: root
+  ansible.builtin.shell:
+    cmd : sudo -iu root code --install-extension  golang.go --no-sandbox --user-data-dir=/etc/skel/.config/Code/User
+
+- name: Rsync /.vscode
+  tags: [copy, .vscode]
+  become: yes
+  ansible.posix.synchronize:
+    src: .vscode/
+    dest: /etc/skel/.vscode
+    owner: false
+
+- name: Copy Visual Studio 
+  become: true
+  become_user: root
+  loop:
+    - /etc/skel/.config/Code/User
+  ansible.builtin.copy:
+    src: vscode-settings.json
+    dest: "{{ item }}/settings.json"
+    mode: 0755

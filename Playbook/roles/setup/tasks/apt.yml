@@ -1,0 +1,10 @@
+- name: Update apt
+  become: true
+  ansible.builtin.apt:
+    update_cache: yes
+
+- name: Upgrade apt
+  become: true
+  ansible.builtin.apt:
+    upgrade: yes
+

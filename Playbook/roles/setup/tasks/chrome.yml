@@ -1,0 +1,29 @@
+
+- name: update
+  become: true
+  ansible.builtin.apt:
+    update_cache: yes
+
+- name: Download Chrome package
+  become: true
+  ansible.builtin.command:
+    cmd: "wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O ./google-chrome-stable_current_amd64.deb"
+
+- name: Install Chrome
+  become: true
+  ansible.builtin.command:
+    cmd: "apt install  ./google-chrome-stable_current_amd64.deb -y"
+
+- name: Remove Chrome package
+  become: true
+  ansible.builtin.command:
+    cmd: "rm ./google-chrome-stable_current_amd64.deb"
+    
+#################### Install chrom browser with snapd  ####################
+
+# - name: install the chrom browser
+#   become: true
+#   ansible.builtin.snap:
+#     name: chromium
+#     classic: yes
+#     state: present

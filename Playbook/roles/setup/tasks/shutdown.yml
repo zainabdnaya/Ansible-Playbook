@@ -1,0 +1,4 @@
+- name: shutdown
+  become: true
+  ansible.builtin.shell:
+    cmd: sudo shutdown -h now

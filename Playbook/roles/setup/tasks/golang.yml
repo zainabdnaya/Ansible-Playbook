@@ -1,0 +1,61 @@
+- name: Update apt
+  become: true
+  ansible.builtin.apt:
+    update_cache: yes
+
+- name: Install dependencies
+  become: true
+  ansible.builtin.apt:
+    name: ['gcc', 'g++']
+    state: present
+
+- name: Install Go 1.19
+  become: true
+  ansible.builtin.get_url:
+    url: https://golang.org/dl/go1.19.linux-amd64.tar.gz
+    dest: /tmp/go1.19.linux-amd64.tar.gz
+    mode: 0755
+
+- name: Extract Go 1.19
+  become: true
+  ansible.builtin.unarchive:
+    src: /tmp/go1.19.linux-amd64.tar.gz
+    dest: /usr/local
+    remote_src: yes
+
+- name: Set Go 1.19 environment variables
+  become: true
+  tags: [go, golang]
+  ansible.builtin.lineinfile:
+    path: /etc/profile
+    line: 'export PATH=$PATH:/usr/local/go/bin'
+    state: present
+    create: yes
+
+- name: Remove Go environment variables
+  become: true
+  tags: [go, golang]
+  ansible.builtin.lineinfile:
+    path: /etc/profile
+    regexp: '^export GOROOT='
+    state: absent
+
+- name: Remove Go environment variables
+  become: true
+  tags: [go, golang]
+  ansible.builtin.lineinfile:
+    path: /etc/profile
+    regexp: '^export GOPATH='
+    state: absent
+
+- name: Reload profile
+  become: true
+  ansible.builtin.shell:
+    cmd: . /etc/profile
+
+- name: Install packages
+  become: true
+  become_user: bocal
+  loop: "{{go_pkgs}}"
+  ansible.builtin.shell:
+    cmd: /usr/local/go/bin/go install {{item}}

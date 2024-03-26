@@ -1,0 +1,33 @@
+- name: Install dependencies
+  become: true
+  ansible.builtin.apt:
+    name: "{{ packages }}"
+    state: present
+
+- name: update apt
+  become: true
+  ansible.builtin.apt:
+    update_cache: yes
+
+- name: Download Discord package
+  become: true
+  ansible.builtin.get_url:
+    url: https://discordapp.com/api/download?platform=linux&format=deb
+    dest: /tmp/discord.deb
+    validate_certs: no
+
+- name: Install Discord
+  become:  true
+  ansible.builtin.shell:
+    cmd: apt install  /tmp/discord.deb -y 
+
+- name: Remove downloaded package
+  become: true
+  ansible.builtin.file:
+    path: /tmp/discord.deb
+    state: absent
+  
+- name: update
+  become: true
+  ansible.builtin.apt:
+    update_cache: yes

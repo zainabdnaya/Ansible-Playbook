@@ -1,0 +1,7 @@
+- name: Reboot machine to finalize setup
+  become: true
+  tags: [reboot]
+  ignore_errors: true
+  shell: "reboot"
+  async: 5
+  poll: 0

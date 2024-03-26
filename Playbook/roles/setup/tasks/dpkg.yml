@@ -1,0 +1,16 @@
+- name: Update apt
+  become: true
+  ansible.builtin.apt:
+    update_cache: yes
+
+- name: Upgrade apt
+  become: true
+  ansible.builtin.apt:
+    upgrade: yes
+
+- name: Fix dpkg errors
+  become: true
+  apt:
+    name: '*'
+    state: 'latest'
+    update_cache: yes

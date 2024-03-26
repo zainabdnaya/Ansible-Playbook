@@ -1,0 +1,19 @@
+- name: Install Zsh
+  become: true
+  ansible.builtin.package:
+    name: zsh
+    state: present
+
+- name: Downland Oh My Zsh on /etc/skel in a file install.sh
+  become: true
+  ansible.builtin.get_url:
+    url: "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
+    dest: "/etc/skel/install.sh"
+    mode: 0755
+
+- name:  copy file ../files/zsh/.zshrc to /etc/skel
+  become: true
+  ansible.builtin.copy:
+    src: ./zsh/.zshrc
+    dest: /etc/skel/.zshrc
+    mode: 0755

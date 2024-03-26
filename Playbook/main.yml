@@ -1,0 +1,21 @@
+- name: Ansible Playbook
+  hosts: hosts
+  strategy: free 
+  remote_user: bocal
+  become_method: sudo
+  roles:
+    - setup
+
+# - name: Campus setup
+#   hosts: all
+#   strategy: free 
+#   remote_user: bocal
+#   vars:
+#     ldap_server: ldap://[LOCAL_IP_OF_LDAP_SERVER]
+#     ldap_base: dc=example,dc=com
+#     ldap_binddn: cn=admin,dc=example,dc=com
+#     ldap_bindpw: 1234
+#     ldap_version: 3
+#     ldap_pam_password: md5
+#   roles:
+#     - setup

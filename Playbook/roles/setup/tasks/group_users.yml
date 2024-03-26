@@ -1,0 +1,5 @@
+- name: Create student group
+  become: true
+  ansible.builtin.group:
+    name: student
+    state: present

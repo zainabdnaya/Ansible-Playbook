@@ -1,0 +1,16 @@
+Port 22
+ListenAddress 0.0.0.0
+ListenAddress ::
+
+PermitRootLogin yes
+PubkeyAuthentication yes
+AuthorizedKeysFile  .ssh/authorized_keys
+
+PasswordAuthentication no
+PermitEmptyPasswords no
+
+ChallengeResponseAuthentication yes
+
+X11Forwarding yes
+
+Subsystem	sftp	internal-sftp

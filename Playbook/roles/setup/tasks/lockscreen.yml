@@ -1,0 +1,60 @@
+- name: Create directory if it does not exist
+  become: true
+  file:
+    path: /etc/dconf/profile
+    state: directory
+  
+- name: Create gdm profile file
+  become: true
+  copy:
+    dest: /etc/dconf/profile/gdm
+    content: |
+      user-db:user
+      system-db:gdm
+      file-db:/usr/share/gdm/greeter-dconf-defaults
+
+- name: Create directory if it does not exist
+  become: true
+  file:
+    path: /etc/dconf/db/gdm.d
+    state: directory
+
+- name: Create gdm keyfile
+  become: true
+  copy:
+    dest: /etc/dconf/db/gdm.d/00-login-screen
+    content: |
+      [org/gnome/login-screen]
+      # Do not show the user list
+      disable-user-list=true
+
+- name: Create user profile file
+  become: true
+  copy:
+    dest: /etc/dconf/profile/user
+    content: |
+      user-db:user
+      system-db:local
+      file-db:/usr/share/user/greeter-dconf-defaults
+
+- name: Create directory if it does not exist
+  become: true
+  file:
+    path: /etc/dconf/db/local.d
+    state: directory
+
+- name: Create a local database for machine-wide settings in /etc/dconf/db/local.d/00-autologout
+  become: true
+  copy:
+    dest: /etc/dconf/db/local.d/00-autologout
+    content: |
+      [org/gnome/settings-daemon/plugins/power]
+      sleep-inactive-ac-timeout=3600
+      sleep-inactive-ac-type='logout'
+      sleep-inactive-battery-timeout=3600
+      sleep-inactive-battery-type='logout'
+
+
+- name: Run dconf update command
+  become: true
+  command: dconf update
