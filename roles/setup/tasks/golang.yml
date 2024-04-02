@@ -1,9 +1,8 @@
-# sudo apt update
 - name: Update apt
   become: true
   ansible.builtin.apt:
     update_cache: yes
-# sudo apt install -y gnupg ca-certificates
+
 - name: Install gnupg and ca-certificates
   become: true
   ansible.builtin.apt:
@@ -12,26 +11,24 @@
   with_items:
     - gnupg
     - ca-certificates
-# sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys F6BC817356A3D45E
+
 - name: Add apt-key adv
   become: true
   ansible.builtin.apt_key:
     keyserver: keyserver.ubuntu.com
     id: F6BC817356A3D45E
-#  add the Go repository to your sources list echo "deb http://ppa.launchpad.net/longsleep/golang-backports/ubuntu focal main" | sudo tee /etc/apt/sources.list.d/golang.list
-# This command adds the repository for the latest long-term support (LTS) version of Ubuntu (focal), but if you are using a different version, replace focal with the codename of your Ubuntu release.
+
 - name: Add Go repository
   become: true
   ansible.builtin.lineinfile:
     path: /etc/apt/sources.list.d/golang.list
     line: "deb http://ppa.launchpad.net/longsleep/golang-backports/ubuntu focal main"
 
-# sudo apt update
 - name: Update apt
   become: true
   ansible.builtin.apt:
     update_cache: yes
-# sudo apt install -y golang-go
+
 - name: Install Go
   become: true
   ansible.builtin.apt:

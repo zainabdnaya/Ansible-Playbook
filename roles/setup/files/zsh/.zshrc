@@ -1,1 +1,3 @@
-sh ~/install.sh
+if [ -x "$HOME/install.sh" ]; then
+    "$HOME/install.sh"
+fi
