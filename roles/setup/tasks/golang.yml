@@ -1,61 +1,40 @@
+# sudo apt update
 - name: Update apt
   become: true
   ansible.builtin.apt:
     update_cache: yes
-
-- name: Install dependencies
+# sudo apt install -y gnupg ca-certificates
+- name: Install gnupg and ca-certificates
   become: true
   ansible.builtin.apt:
-    name: ['gcc', 'g++']
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - gnupg
+    - ca-certificates
+# sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys F6BC817356A3D45E
+- name: Add apt-key adv
+  become: true
+  ansible.builtin.apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: F6BC817356A3D45E
+#  add the Go repository to your sources list echo "deb http://ppa.launchpad.net/longsleep/golang-backports/ubuntu focal main" | sudo tee /etc/apt/sources.list.d/golang.list
+# This command adds the repository for the latest long-term support (LTS) version of Ubuntu (focal), but if you are using a different version, replace focal with the codename of your Ubuntu release.
+- name: Add Go repository
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/apt/sources.list.d/golang.list
+    line: "deb http://ppa.launchpad.net/longsleep/golang-backports/ubuntu focal main"
+
+# sudo apt update
+- name: Update apt
+  become: true
+  ansible.builtin.apt:
+    update_cache: yes
+# sudo apt install -y golang-go
+- name: Install Go
+  become: true
+  ansible.builtin.apt:
+    name: golang-go
     state: present
 
-- name: Install Go 1.19
-  become: true
-  ansible.builtin.get_url:
-    url: https://golang.org/dl/go1.19.linux-amd64.tar.gz
-    dest: /tmp/go1.19.linux-amd64.tar.gz
-    mode: 0755
-
-- name: Extract Go 1.19
-  become: true
-  ansible.builtin.unarchive:
-    src: /tmp/go1.19.linux-amd64.tar.gz
-    dest: /usr/local
-    remote_src: yes
-
-- name: Set Go 1.19 environment variables
-  become: true
-  tags: [go, golang]
-  ansible.builtin.lineinfile:
-    path: /etc/profile
-    line: 'export PATH=$PATH:/usr/local/go/bin'
-    state: present
-    create: yes
-
-- name: Remove Go environment variables
-  become: true
-  tags: [go, golang]
-  ansible.builtin.lineinfile:
-    path: /etc/profile
-    regexp: '^export GOROOT='
-    state: absent
-
-- name: Remove Go environment variables
-  become: true
-  tags: [go, golang]
-  ansible.builtin.lineinfile:
-    path: /etc/profile
-    regexp: '^export GOPATH='
-    state: absent
-
-- name: Reload profile
-  become: true
-  ansible.builtin.shell:
-    cmd: . /etc/profile
-
-- name: Install packages
-  become: true
-  become_user: bocal
-  loop: "{{go_pkgs}}"
-  ansible.builtin.shell:
-    cmd: /usr/local/go/bin/go install {{item}}
