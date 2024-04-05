@@ -17,7 +17,7 @@ base {{ ldap_base }}
 
 # The DN to bind with for normal lookups.
 binddn cn=admin,dc=example,dc=com
-bindpw 1234
+bindpw {{ldap_bindpw}}
 
 # The DN used for password modifications by root.
 #rootpwmoddn cn=admin,dc=example,dc=com
