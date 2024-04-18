@@ -15,7 +15,7 @@ git clone https://github.com/zainabdnaya/Ansible-Playbook.git
 2. Navigate to the repository directory:
 
 ```bash
-cd your-repo
+cd Ansible-Playbook
 ```
 
 3. Run the Ansible playbook using the following command:
