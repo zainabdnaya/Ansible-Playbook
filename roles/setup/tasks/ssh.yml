@@ -1,4 +1,4 @@
- name: Add bocal members public keys to the bocal user
+- name: Add bocal members public keys to the bocal user
   tags: [ssh]
   loop: "{{ extra_ssh_keys }}"
   ansible.builtin.lineinfile:
