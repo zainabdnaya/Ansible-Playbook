@@ -1,3 +1,10 @@
+- name: Create Ansible temporary directory
+  become: true  # Required for permission changes
+  ansible.builtin.file:
+    path: /tmp/ansible
+    state: directory
+    mode: 0755  # Grant write and execute for user executing Ansible (often root)
+
 - name:  The /home/bocal have every permission but other users no
   become: true
   ansible.builtin.file:

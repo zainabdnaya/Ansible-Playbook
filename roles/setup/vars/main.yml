@@ -1,4 +1,4 @@
-newpassword: "bocal"
+newpassword: "80C41574FF"
 
 ansible_user: "bocal"
 
@@ -29,4 +29,5 @@ packages:
 folders_to_keep:
   - "/home/bocal"
 
-# extra_ssh_keys:
+extra_ssh_keys:
+  - SHA256:e4CdHjorEuy0L/ThisIsNotRealSshJustATest

@@ -1,0 +1,66 @@
+- name : install libnss
+  become: true
+  ansible.builtin.apt:
+    name: libnss-ldap
+    state: present
+
+- name : install libpam-ldap
+  become: true
+  ansible.builtin.apt:
+    name: libpam-ldap
+    state: present
+
+
+- name : install ldap-utils
+  become: true
+  ansible.builtin.apt:
+    name: ldap-utils
+    state: present
+
+- name : install nslcd
+  become: true
+  ansible.builtin.apt:
+    name: nslcd
+    state: present
+
+- name : configure /etc/nslcd.conf
+  become: true
+  ansible.builtin.template:
+    src: nslcd.conf.j2
+    dest: /etc/nslcd.conf
+    mode: 0600
+
+- name : configure /etc/ldap.conf
+  become: true
+  ansible.builtin.template:
+    src: ldap.conf.j2
+    dest: /etc/ldap.conf
+    mode: 0600
+
+- name : configure /etc/ldap.secret
+  become: true
+  ansible.builtin.template:
+    src: ldap.secret.j2
+    dest: /etc/ldap.secret
+    mode: 0600
+
+- name : configure /etc/nsswitch.conf
+  become: true
+  ansible.builtin.copy:
+    src: nsswitch.conf
+    dest: /etc/nsswitch.conf
+    mode: 0600
+
+- name : configure /etc/pam.d/common-session
+  become: true
+  ansible.builtin.copy:
+    src: common-session
+    dest: /etc/pam.d/common-session
+    mode: 0600
+
+- name : configure /etc/pam.d/common-password
+  become: true
+  ansible.builtin.copy:
+    src: common-password
+    dest: /etc/pam.d/common-password
+    mode: 0600

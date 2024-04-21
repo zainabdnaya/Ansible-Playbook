@@ -46,6 +46,23 @@
   ansible.builtin.shell:
     cmd : sudo -iu root code --install-extension  golang.go --no-sandbox --user-data-dir=/etc/skel/.config/Code/User
 
+- name: Allow user 'bocal' to run rsync without password
+  become: yes
+  become_user: root
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers
+    state: present
+    regexp: '^bocal\s+ALL=(ALL)\s+NOPASSWD:\s+/usr/bin/rsync'
+    line: 'bocal ALL=(ALL) NOPASSWD: /usr/bin/rsync'
+    validate: '/usr/sbin/visudo -cf %s'
+
+# - name: Add bocal's SSH key to remote server
+#   authorized_key:
+#     user: remote_user
+#     key: "{{ lookup('file', '/home/bocal/.ssh/id_rsa.pub') }}"
+#     state: present
+
+
 - name: Rsync /.vscode
   tags: [copy, .vscode]
   become: yes

@@ -1,24 +1,41 @@
-- name: Update apt
-  become: true
-  ansible.builtin.apt:
-    update_cache: yes
+# - name: Update apt
+#   become: true
+#   ansible.builtin.apt:
+#     update_cache: yes
 
-- name: Install gnupg and ca-certificates
-  become: true
-  ansible.builtin.apt:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - gnupg
-    - ca-certificates
+# - name: Install gnupg and ca-certificates
+#   become: true
+#   ansible.builtin.apt:
+#     name: "{{ item }}"
+#     state: present
+#   with_items:
+#     - gnupg
+#     - ca-certificates
 
-- name: Add apt-key adv
-  become: true
-  ansible.builtin.apt_key:
-    keyserver: keyserver.ubuntu.com
-    id: F6BC817356A3D45E
+# - name: Add apt-key adv
+#   become: true
+#   ansible.builtin.apt_key:
+#     keyserver: keyserver.ubuntu.com
+#     id: F6BC817356A3D45E
 
+# - name: Add Go repository
+#   become: true
+#   ansible.builtin.lineinfile:
+#     path: /etc/apt/sources.list.d/golang.list
+#     line: "deb http://ppa.launchpad.net/longsleep/golang-backports/ubuntu focal main"
 - name: Add Go repository
+  become: true
+  ansible.builtin.file:
+    path: /etc/apt/sources.list.d
+
+- name: Create golang.list file for Golang repository
+  become: true
+  ansible.builtin.file:
+    path: /etc/apt/sources.list.d/golang.list
+    state: present
+    mode: 0644 
+
+- name: Add Go repository entry to sources.list.d
   become: true
   ansible.builtin.lineinfile:
     path: /etc/apt/sources.list.d/golang.list
