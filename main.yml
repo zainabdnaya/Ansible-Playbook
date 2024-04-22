@@ -3,20 +3,21 @@
   strategy: free 
   remote_user: root
   become_method: sudo
+  vars:
+    ldap_server: ldap://192.168.89.112
+    ldap_base: dc=zone01kisumu,dc=ke
+    ldap_binddn: cn=admin,dc=zone01kisumu,dc=ke
+    ldap_bindpw: 1234
+    ldap_version: 3
+    ldap_pam_password: md5
   roles:
     - setup
-  # vars:
-  #   ldap_server: ldap://192.168.89.112
-  #   ldap_base: dc=zone01kisumu,dc=ke
-  #   ldap_binddn: cn=admin,dc=zone01kisumu,dc=ke
-  #   ldap_bindpw: 1234
-  #   ldap_version: 3
-  #   ldap_pam_password: md5
 
 # - name: Campus setup
 #   hosts: all
 #   strategy: free 
 #   remote_user: bocal
+#   become_methode: sudo 
 #   vars:
 #     ldap_server: ldap://[LOCAL_IP_OF_LDAP_SERVER]
 #     ldap_base: dc=example,dc=com

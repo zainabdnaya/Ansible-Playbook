@@ -25,7 +25,7 @@
 - name: Install Docker
   become: yes
   apt:
-    name: docker-ce
+    name: docker
     state: present
 
 - name: Install Docker Compose

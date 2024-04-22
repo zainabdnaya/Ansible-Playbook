@@ -6,17 +6,17 @@
 # - import_tasks: zsh.yml
 # - import_tasks: nodejs.yml
 # - import_tasks: editors.yml
-- import_tasks: golang.yml
-- import_tasks: lockscreen.yml
-- import_tasks: background.yml
-- import_tasks: discord.yml
-- import_tasks: snapd.yml
-- import_tasks: docker.yml
-- import_tasks: network.yml
-- import_tasks: timezone.yml
-- import_tasks: ssh.yml
+# - import_tasks: discord.yml
+# - import_tasks: snapd.yml
+# - import_tasks: timezone.yml
+# - import_tasks: docker.yml
+# - import_tasks: network.yml
+# - import_tasks: golang.yml
+# - import_tasks: ssh.yml
 # - import_tasks: ldap.yml
-# - import_tasks: permissions.yml
+# - import_tasks: lockscreen.yml
+- import_tasks: background.yml
 - import_tasks: change_password.yml
+# - import_tasks: permissions.yml
 - import_tasks: reboot.yml
 # - import_tasks: shutdown.yml

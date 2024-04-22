@@ -1,4 +1,4 @@
 - name: change the time to the time Zone 
   become: true
   ansible.builtin.shell:
-    cmd: sudo timedatectl set-timezone Africa/kenya
+    cmd: timedatectl set-timezone Africa/Nairobi
