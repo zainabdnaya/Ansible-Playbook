@@ -1,43 +1,31 @@
-
-- name: Update apt
-  become: true
-  ansible.builtin.apt:
-    update_cache: yes
-
-- name: Install gnupg and ca-certificates
-  become: true
-  ansible.builtin.apt:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - gnupg
-    - ca-certificates
-
-- name: Add apt-key adv
-  become: true
-  ansible.builtin.apt_key:
-    keyserver: keyserver.ubuntu.com
-    id: F6BC817356A3D45E
-
-- name: Ensure directory exists
-  file:
-    path: /etc/apt/sources.list.d
-    state: directory
-    mode: 0755
-
-
-- name: Create Go repository file
-  become: true
-  ansible.builtin.copy:
-    dest: /etc/apt/sources.list.d/golang.list
-    content: |
-      deb http://ppa.launchpad.net/longsleep/golang-backports/ubuntu focal main
-    mode: 0644
-
-
-- name: Install Go
+- name: remove previous go
   become: true
   ansible.builtin.apt:
     name: golang-go
-    state: present
+    state: absent
 
+- name: remove /etc/source.list.d/golang.list
+  become: true
+  ansible.builtin.file:
+    path: /etc/apt/sources.list.d/golang.list
+    state: absent
+
+- name: Download the Go binary
+  get_url:
+    url: https://dl.google.com/go/go1.22.1.linux-amd64.tar.gz
+    dest: /tmp/go.tar.gz
+    mode: 0755
+
+- name: Extract the Go binary
+  archive:
+    path: /tmp/go.tar.gz
+
+- name: Set Go environment variables
+  lineinfile:
+    path: ~/.bashrc
+    line: 'export GOROOT=/usr/local/go'
+    state: present
+  lineinfile:
+    path: ~/.bashrc
+    line: 'export GOPATH=$HOME/go'
+    state: present
