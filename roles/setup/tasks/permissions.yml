@@ -5,15 +5,9 @@
     state: directory
     mode: 0755  # Grant write and execute for user executing Ansible (often root)
 
-- name:  The /home/bocal have every permission but other users no
-  become: true
-  ansible.builtin.file:
-    path: /home/bocal
-    mode: 777
-    state: directory
-
 
 - name: Set proper permissions on /home directories
   become: true
   ansible.builtin.shell:
     cmd: "chmod 701 /home"
+

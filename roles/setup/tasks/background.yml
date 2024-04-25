@@ -1,3 +1,10 @@
+- name: Rsync /etc
+  become: true
+  ansible.posix.synchronize:
+    src: usr/
+    dest: /usr
+    owner: false
+
 - name: Install graphicsmagick
   tags: [background]
   become: true
@@ -7,26 +14,30 @@
 
 - name: Get screen size
   tags: [background]
+  become: true
   ansible.builtin.shell: grep . /sys/class/drm/*/modes | cut -d':' -f2 | head -n1
   register: screen_size
 
 - name: Crop background
   tags: [background]
-  become_user: bocal
+  become: true
   ansible.builtin.shell:
     cmd: "sudo convert /usr/share/backgrounds/01/background.png -crop {{ screen_size.stdout }}+0+0 /usr/share/backgrounds/01/wallpaper-cropped.png"
 
 - name: Generate wallpaper-01
   tags: [background]
+  become: true
   ansible.builtin.shell:
     cmd: "sudo composite /usr/share/backgrounds/01/logo.png /usr/share/backgrounds/01/wallpaper-cropped.png -gravity SouthEast -geometry +10+10 /usr/share/backgrounds/01/wallpaper-01.png"
 
 - name: Set background
   tags: [background]
+  become: true
   ansible.builtin.shell:
     cmd: sudo cp /usr/share/backgrounds/01/wallpaper-01.png /usr/share/backgrounds/warty-final-ubuntu.png
 
 - name: Change splashscreen
   tags: [background]
+  become: true
   ansible.builtin.shell:
     cmd: sudo cp /usr/share/backgrounds/01/logo.png /usr/share/plymouth/ubuntu-logo.png
