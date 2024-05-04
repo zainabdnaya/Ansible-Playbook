@@ -1,0 +1,9 @@
+- name: Create user
+  become: true
+  ansible.builtin.user:
+    create_home: yes
+    name: checkpoint
+    password: "{{  pass|password_hash('sha512') }}"
+    shell: /usr/bin/zsh
+    uid: 2001
+

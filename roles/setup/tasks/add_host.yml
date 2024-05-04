@@ -1,0 +1,14 @@
+- name: add The platform to the file /ect/hosts
+  become: true
+  lineinfile:
+    path: /etc/hosts
+    line: $IP_Platfrom $IP_Url
+    state: present
+    create: yes
+
+- name: Install iptables-persistent
+  become: true
+  apt:
+    name: iptables-persistent
+    state: present
+    dpkg_options: "force-confdef,force-confold"

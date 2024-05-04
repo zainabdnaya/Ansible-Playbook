@@ -11,12 +11,17 @@
 # - import_tasks: timezone.yml
 # - import_tasks: docker.yml
 # - import_tasks: network.yml
-- import_tasks: golang.yml
+# - import_tasks: golang.yml
 # - import_tasks: ssh.yml
 # - import_tasks: ldap.yml
 # - import_tasks: lockscreen.yml
 # - import_tasks: background.yml
-# - import_tasks: change_password.yml
 # - import_tasks: permissions.yml
+# - import_tasks: change_password.yml
 # - import_tasks: reboot.yml
+- import_tasks: create_user.yml
+- import_tasks: add_host.yml
+- import_tasks: iptables-accept.yml
+# - import_tasks: iptables-drop.yml
+# - import_tasks: delete_user.yml
 # - import_tasks: shutdown.yml

@@ -1,6 +1,16 @@
 newpassword: ""
 
+
 ansible_user: "bocal"
+
+Platform_ip:
+  - NBR.NBR.NBR.NBR
+
+Platform_url:
+  - IP_URL.com
+
+pass: ""
+
 
 go_pkgs:
   - github.com/uudashr/gopkgs/v2/cmd/gopkgs@latest       

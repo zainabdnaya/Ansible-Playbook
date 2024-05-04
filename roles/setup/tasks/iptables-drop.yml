@@ -1,0 +1,20 @@
+- name: Set default policies to ACCEPT
+  become: true
+  shell: iptables -P INPUT ACCEPT && iptables -P OUTPUT ACCEPT && iptables -P FORWARD ACCEPT
+
+- name: Flush all existing rules
+  become: true
+  shell: iptables -F
+
+- name: Delete any user-defined chains
+  become: true
+  shell: iptables -X
+
+- name: Save the new rules
+  become: true
+  shell: iptables-save
+
+# - name: Save iptables rules
+#   become: true
+#   ansible.builtin.shell: 
+#     cmd: iptables-save > /etc/iptables/rules.v4
