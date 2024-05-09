@@ -12,9 +12,4 @@
 
 - name: Save the new rules
   become: true
-  shell: iptables-save
-
-# - name: Save iptables rules
-#   become: true
-#   ansible.builtin.shell: 
-#     cmd: iptables-save > /etc/iptables/rules.v4
+  shell: iptables-save > /etc/iptables/rules.v4

@@ -1,0 +1,6 @@
+- name: Install iptables-persistent
+  become: true
+  apt:
+    name: iptables-persistent
+    state: present
+    dpkg_options: "force-confdef,force-confold"

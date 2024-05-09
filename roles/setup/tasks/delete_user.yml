@@ -2,4 +2,4 @@
   become: true
   ignore_errors: true
   ansible.builtin.shell:
-    cmd: sudo deluser user
+    cmd: sudo deluser username

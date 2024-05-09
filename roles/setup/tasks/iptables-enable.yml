@@ -1,0 +1,54 @@
+- name: Allow incoming SSH traffic on port 22
+  become: true
+  ansible.builtin.shell:
+    cmd: iptables -A INPUT -p tcp --dport 22 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+
+- name: Allow outgoing SSH traffic on port 22
+  become: true
+  ansible.builtin.shell:
+    cmd: iptables -A OUTPUT -p tcp --sport 22 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+
+- name: Allow outgoing SSH traffic on port 389
+  become: true
+  ansible.builtin.shell:
+    cmd: iptables -A INPUT -p tcp --dport 389 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+
+- name: Allow outgoing SSH traffic on port 389
+  become: true
+  ansible.builtin.shell:
+    cmd: iptables -A OUTPUT -p tcp --sport 389 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+
+- name: Allow outgoing SSH traffic on port 389
+  become: true
+  ansible.builtin.shell:
+    cmd: iptables -A INPUT -p udp --dport 389 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+
+- name: Allow outgoing SSH traffic on port 389
+  become: true 
+  ansible.builtin.shell:
+    cmd: iptables -A OUTPUT -p udp --sport 389 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+
+- name: Allow outgoing traffic to a specific destination
+  become: true
+  ansible.builtin.shell:
+    cmd: iptables -A OUTPUT -d  ${the_accepted_url} -j ACCEPT
+    
+ ## this last line should be written something like this 
+ ## cmd: iptables -A OUTPUT -d learn.zone01kisumu.ke -j ACCEPT
+ 
+- name: Allow outgoing traffic to a specific destination
+  become: true
+  ansible.builtin.shell:
+    cmd: iptables -A OUTPUT -d ${the_ip_adress_accepted} -j ACCEPT
+ ## this last line should be written something like this 
+ ## cmd: iptables -A OUTPUT -d 192.168.89.112 -j ACCEPT
+
+- name: Drop all outgoing traffic
+  become: true
+  ansible.builtin.shell:
+    cmd: iptables -A OUTPUT -j DROP
+  
+- name: Save iptables rules
+  become: true
+  ansible.builtin.shell:
+    cmd: iptables-save  > /etc/iptables/rules.v4

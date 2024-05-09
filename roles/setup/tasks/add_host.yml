@@ -6,9 +6,5 @@
     state: present
     create: yes
 
-- name: Install iptables-persistent
-  become: true
-  apt:
-    name: iptables-persistent
-    state: present
-    dpkg_options: "force-confdef,force-confold"
+#this line should be like this per example
+# line: 192.168.84.2  learn.zone01kisumu.ke

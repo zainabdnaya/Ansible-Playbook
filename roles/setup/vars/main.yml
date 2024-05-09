@@ -1,5 +1,6 @@
 newpassword: ""
 
+pass: ""
 
 ansible_user: "bocal"
 
